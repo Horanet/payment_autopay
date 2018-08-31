@@ -19,9 +19,8 @@ class AutoPayController(http.Controller):
         """Process AutoPay DPN."""
         _logger.debug('Beginning AutoPay DPN form_feedback with post data %s', pprint.pformat(post))
         self.autopay_validate_data(**post)
-        autopay_provider = request.env['payment.acquirer'].search([('provider', '=', 'autopay')])
-
-        return werkzeug.utils.redirect('%s' % autopay_provider.autopay_get_confirmation_url())
+        tx = request.env['payment.transaction']._autopay_form_get_tx_from_data(post)
+        return werkzeug.utils.redirect('%s' % tx.acquirer_id.autopay_get_confirmation_url())
 
     def autopay_validate_data(self, **post):
         """Check data returned from AutoPay."""
