@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Intermédiaire de paiement Autopay",
-    'version': '10.0.0.0.1',
+    'version': '10.0.1.0.0',
     'summary': """Intermédiaire de paiement : Implémentation de Autopay""",
     'description': "no warning",
     'author': "Horanet",
