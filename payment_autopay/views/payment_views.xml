@@ -7,7 +7,6 @@
         <field name="arch" type="xml">
             <xpath expr='//group[@name="acquirer"]' position='after'>
                 <group attrs="{'invisible': [('provider', '!=', 'autopay')]}">
-                    <field name="autopay_confirmation_url"/>
                 </group>
             </xpath>
         </field>

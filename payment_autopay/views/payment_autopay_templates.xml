@@ -4,6 +4,7 @@
     <template id="autopay_acquirer_button">
         <form t-att-action="tx_url" method="post" target="_self">
             <input type="hidden" name="reference" t-att-value="reference"/>
+            <input type="hidden" name="return_url" t-att-value="return_url"/>
             <!-- submit -->
             <button type="submit" width="100px" t-att-class="submit_class">
                 <img t-if="not submit_txt" src="/payment_autopay/static/src/img/icon.png"/>

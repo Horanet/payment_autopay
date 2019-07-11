@@ -27,22 +27,18 @@ class AutoPayTransaction(models.Model):
                 error_msg += '; multiple order found'
             _logger.error(error_msg)
             raise ValidationError(error_msg)
-        return txs[0]
+
+        tx = txs[0]
+        if not tx.acquirer_reference:
+            tx.acquirer_reference = uuid.uuid4()
+
+        return tx
 
     @api.multi
     def _autopay_form_validate(self, data):
         _logger.info('Validated AutoPay payment for tx %s: set as done' % self.reference)
 
-        res = {
-            'acquirer_reference': uuid.uuid4(),
+        return self.write({
             'state': 'done',
             'date_validate': fields.Datetime.now()
-        }
-
-        request.session.update({
-            'sale_order_id': False,
-            'sale_transaction_id': False,
-            'website_sale_current_pl': False,
         })
-
-        return self.write(res)
