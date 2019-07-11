@@ -76,7 +76,7 @@ tests:
   - sleep 10
   - docker run --rm --link $POSTGRES_DB:db $IMAGE_TAG -d my-db -i $MODULE_NAME,l10n_fr --stop-after-init
   - docker run --rm --mount src=covvolume_$CI_PIPELINE_ID,target=/opt/odoo-addons --link $POSTGRES_DB:db $IMAGE_TAG python -m coverage run /opt/venv-odoo/bin/odoo $DB_ACCESS -d my-db --db-filter my-db -u $MODULE_NAME --test-enable --stop-after-init
-  - docker run --rm --mount src=covvolume_$CI_PIPELINE_ID,target=/opt/odoo-addons $IMAGE_TAG python -m coverage report --skip-covered --include="./payment_autopay/*"
+  - docker run --rm --mount src=covvolume_$CI_PIPELINE_ID,target=/opt/odoo-addons $IMAGE_TAG python -m coverage report --skip-covered --include="./${MODULE_NAME}/*"
   after_script:
   - docker rm -vf $POSTGRES_DB
   - docker volume rm covvolume_$CI_PIPELINE_ID
@@ -91,7 +91,7 @@ test-MR:
   - sleep 10
   - docker run --rm --link $POSTGRES_DB:db $IMAGE_TAG -d my-db -i $MODULE_NAME,l10n_fr --stop-after-init
   - docker run --rm --mount src=covvolume_$CI_PIPELINE_ID,target=/opt/odoo-addons --link $POSTGRES_DB:db $IMAGE_TAG python -m coverage run /opt/venv-odoo/bin/odoo $DB_ACCESS -d my-db --db-filter my-db -u $MODULE_NAME --test-enable --stop-after-init
-  - docker run --rm --mount src=covvolume_$CI_PIPELINE_ID,target=/opt/odoo-addons $IMAGE_TAG python -m coverage report --skip-covered --include="./payment_autopay/*"
+  - docker run --rm --mount src=covvolume_$CI_PIPELINE_ID,target=/opt/odoo-addons $IMAGE_TAG python -m coverage report --skip-covered --include="./${MODULE_NAME}/*"
   after_script:
   - docker rm -vf $POSTGRES_DB
   - docker volume rm covvolume_$CI_PIPELINE_ID
