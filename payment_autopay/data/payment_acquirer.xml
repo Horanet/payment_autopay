@@ -9,7 +9,6 @@
             <field name="view_template_id" ref="autopay_acquirer_button"/>
             <field name="environment">test</field>
             <field name="pre_msg"></field>
-            <field name="autopay_confirmation_url">/shop/confirmation</field>
             <field name="description" type="html">
                 <p>AutoPay est un système de paiement en ligne. Son but est d'automatiquement valider un paiement.</p>
                 <ul class="list-inline">

@@ -11,7 +11,6 @@ class AutoPayAcquirer(models.Model):
     _inherit = 'payment.acquirer'
 
     provider = fields.Selection(selection_add=[('autopay', 'AutoPay')])
-    autopay_confirmation_url = fields.Char(string='Confirmation URL', required_if_provider='autopay')
 
     @api.model
     def _get_feature_support(self):
@@ -26,17 +25,11 @@ class AutoPayAcquirer(models.Model):
                         object
         """
         res = super(AutoPayAcquirer, self)._get_feature_support()
-        res['authorize'].append('autopay')
         return res
 
     @api.multi
     def autopay_get_form_action_url(self):
         return '/payment/autopay'
-
-    @api.multi
-    def autopay_get_confirmation_url(self):
-        self.ensure_one()
-        return self.autopay_confirmation_url
 
     @api.multi
     def autopay_form_generate_values(self, values):
