@@ -3,8 +3,6 @@ stages:
 - build
 - test
 - deploy
-- build-MR
-- test-MR
 
 variables:
   #CI_DEBUG_TRACE: "true" # useful to debug variables for each stages
@@ -57,16 +55,9 @@ build:
   - git submodule update --remote
   - docker build --build-arg CI_JOB_TOKEN="$CI_JOB_TOKEN" -t $IMAGE_TAG . --pull
   only:
+  - master
   - /^release/.*$/
   - dev
-  
-build-MR:
-  stage: build-MR
-  script:
-  - docker rmi -f $IMAGE_TAG
-  - git submodule update --remote
-  - docker build --build-arg CI_JOB_TOKEN="$CI_JOB_TOKEN" -t $IMAGE_TAG . --pull
-  only:
   - merge_requests
 
 tests:
@@ -81,21 +72,8 @@ tests:
   - docker rm -vf $POSTGRES_DB
   - docker volume rm covvolume_$CI_PIPELINE_ID
   only:
+  - master
   - dev
-  coverage: '/^TOTAL\s+\d+\s+\d+\s+(\d+)%$/'
-
-test-MR:
-  stage: test-MR
-  script:
-  - docker run -d -e POSTGRES_USER=$POSTGRES_USER -e POSTGRES_PASSWORD=$POSTGRES_PASSWORD --name $POSTGRES_DB postgres:latest
-  - sleep 10
-  - docker run --rm --link $POSTGRES_DB:db $IMAGE_TAG -d my-db -i $MODULE_NAME,l10n_fr --stop-after-init
-  - docker run --rm --mount src=covvolume_$CI_PIPELINE_ID,target=/opt/odoo-addons --link $POSTGRES_DB:db $IMAGE_TAG python -m coverage run /opt/venv-odoo/bin/odoo $DB_ACCESS -d my-db --db-filter my-db -u $MODULE_NAME --test-enable --stop-after-init
-  - docker run --rm --mount src=covvolume_$CI_PIPELINE_ID,target=/opt/odoo-addons $IMAGE_TAG python -m coverage report --skip-covered --include="./${MODULE_NAME}/*"
-  after_script:
-  - docker rm -vf $POSTGRES_DB
-  - docker volume rm covvolume_$CI_PIPELINE_ID
-  only:
   - merge_requests
   coverage: '/^TOTAL\s+\d+\s+\d+\s+(\d+)%$/'
 
@@ -110,6 +88,7 @@ deploy_review:
     name: review/$CI_PROJECT_NAME/$CI_COMMIT_REF_NAME
     url: http://$CI_ENVIRONMENT_SLUG.ci.horanet.com
   only:
+  - master
   - /^release/.*$/
 
 stop_review:
@@ -118,4 +97,5 @@ stop_review:
   script:
   - docker rm -vf $REVIEW_CONTAINER_NAME-odoo $REVIEW_CONTAINER_NAME-db
   only:
+  - master
   - /^release/.*$/
