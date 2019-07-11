@@ -12,7 +12,7 @@ import urlparse
 _logger = logging.getLogger(__name__)
 
 
-class AutoPayController(http.Controller):
+class AutopayController(http.Controller):
 
     @http.route('/payment/autopay', type='http', auth="none", methods=['POST', 'GET'], csrf=False)
     def autopay_payment(self, **post):
