@@ -22,9 +22,9 @@ class AutoPayTransaction(models.Model):
         if not txs or len(txs) > 1:
             error_msg = 'AutoPay: received data for reference %s' % reference
             if not txs:
-                error_msg += '; no order found'
+                error_msg += '; no transaction found'
             else:
-                error_msg += '; multiple order found'
+                error_msg += '; multiple transactions found'
             _logger.error(error_msg)
             raise ValidationError(error_msg)
 
