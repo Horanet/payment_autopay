@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
-
 from odoo import api, models, fields, _
-from odoo.http import request
 from odoo.addons.payment.models.payment_acquirer import ValidationError
 
 import logging

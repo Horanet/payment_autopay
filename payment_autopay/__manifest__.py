@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     'name': "Intermédiaire de paiement Autopay",
     'version': '11.0.1.0.0',
