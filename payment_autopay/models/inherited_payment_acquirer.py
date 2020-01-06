@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from odoo import api, fields, models
 
 import logging
@@ -35,8 +33,6 @@ class AutoPayAcquirer(models.Model):
     def autopay_form_generate_values(self, values):
         self.ensure_one()
 
-        autopay_tx_values = dict((k, v) for k, v in values.items() if v)
+        autopay_tx_values = dict((k, v) for k, v in list(values.items()) if v)
 
         return autopay_tx_values
-
-    pass

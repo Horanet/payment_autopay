@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from lxml import objectify
 
 from odoo.tools import mute_logger
@@ -12,7 +10,7 @@ class AutopayPayment(PaymentAcquirerCommon):
 
     def setUp(self):
         super(AutopayPayment, self).setUp()
-        self.autopay = self.env.ref('payment_autopay.payment_acquirer_autopay')
+        self.autopay = self.env.ref('payment.payment_acquirer_autopay')
 
     def test_10_autopay_form_render(self):
         base_url = self.env['ir.config_parameter'].get_param('web.base.url')
@@ -93,7 +91,7 @@ class AutopayPayment(PaymentAcquirerCommon):
 
         # typical data posted by autopay after client has successfully paid
         autopay_post_data = {
-            'reference': u'test_ref_2',
+            'reference': 'test_ref_2',
             'return_url': None,
         }
 
