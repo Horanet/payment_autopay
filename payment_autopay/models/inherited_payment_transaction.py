@@ -1,4 +1,4 @@
-from odoo import api, models, fields, _
+from odoo import api, fields, models, _
 from odoo.addons.payment.models.payment_acquirer import ValidationError
 
 import logging
@@ -31,11 +31,10 @@ class AutoPayTransaction(models.Model):
 
         return tx
 
-    @api.multi
     def _autopay_form_validate(self, data):
         _logger.info('Validated AutoPay payment for tx %s: set as done' % self.reference)
 
         return self.write({
             'state': 'done',
-            'date_validate': fields.Datetime.now()
+            'date': fields.Datetime.now()
         })

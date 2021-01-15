@@ -5,12 +5,21 @@
         <field name="model">payment.acquirer</field>
         <field name="inherit_id" ref="payment.acquirer_form"/>
         <field name="arch" type="xml">
-            <page name="acquirer_credentials" position="attributes">
-                <attribute name="attrs">{'invisible': [('provider', '=', 'autopay')]}</attribute>
-            </page>
-            <field name="cancel_msg" position="attributes">
-                <attribute name="attrs">{'invisible': [('provider', '=', 'autopay')]}</attribute>
-            </field>
+            <xpath expr='//group[@name="acquirer"]' position='inside'>
+                <group attrs="{'invisible': [('provider', '!=', 'autopay')]}">
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="transaction_form_autopay" model="ir.ui.view">
+        <field name="name">acquirer.transaction.form.autopay</field>
+        <field name="model">payment.transaction</field>
+        <field name="inherit_id" ref="payment.transaction_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='acquirer_reference']" position="after">
+                <div></div>
+            </xpath>
         </field>
     </record>
 </odoo>

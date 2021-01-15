@@ -1,4 +1,4 @@
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 import logging
 
@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 class AutoPayAcquirer(models.Model):
     _inherit = 'payment.acquirer'
 
-    provider = fields.Selection(selection_add=[('autopay', 'AutoPay')])
+    provider = fields.Selection(selection_add=[('autopay', 'AutoPay')], ondelete={'autopay': 'set default'})
 
     @api.model
     def _get_feature_support(self):
@@ -25,11 +25,10 @@ class AutoPayAcquirer(models.Model):
         res = super(AutoPayAcquirer, self)._get_feature_support()
         return res
 
-    @api.multi
+    @api.model
     def autopay_get_form_action_url(self):
         return '/payment/autopay'
 
-    @api.multi
     def autopay_form_generate_values(self, values):
         self.ensure_one()
 
