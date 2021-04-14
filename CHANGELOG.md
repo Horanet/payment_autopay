@@ -13,3 +13,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 [11.0.1.0.0]: https://gitlab.horanet.com/maximilien.tantin/payment_autopay/compare/10.0.1.0.2...11.0.1.0.0
 [Unreleased]: https://gitlab.horanet.com/maximilien.tantin/payment_autopay/compare/11.0.1.0.0...dev-11.0
+
+## [13.0.1.0.0] 2021-14-04
+ - Migration to Odoo 13.0

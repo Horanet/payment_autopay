@@ -1,6 +1,6 @@
 {
     'name': "Intermédiaire de paiement Autopay",
-    'version': '14.0.1.0.0',
+    'version': '13.0.1.0.0',
     'summary': """Intermédiaire de paiement : Implémentation de Autopay""",
     'author': "Horanet",
     'website': "http://www.horanet.com/",
